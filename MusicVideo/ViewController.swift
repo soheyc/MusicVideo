@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var videos = [Video]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,15 +21,14 @@ class ViewController: UIViewController {
         
     }
     
-    func didLoadData(result:String){
-        let alert = UIAlertController(title: (result), message: nil, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default){ action -> Void in
-            
+    func didLoadData(videos: [Video]){
+        for (i, vid) in videos.enumerate(){
+            print("Top \(i+1): \(vid.vName)")
         }
         
-        alert.addAction(okAction)
-        self.presentViewController(alert, animated: true, completion: nil)
-        
+//        for i in 0..<videos.count{
+//            print("Top \(i+1) : \(videos[i].vName)")
+//        }
     }
 }
 

@@ -11,7 +11,7 @@ import Foundation
 class APIManager{
     
     
-    func loadData(urlString: String, completion: (result:String)->Void){
+    func loadData(urlString: String, completion: (result:[Video])->Void){
         
         let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
   
@@ -23,38 +23,32 @@ class APIManager{
             (data, response, error)->Void in
             
             if error != nil{
-                completion(result: error!.localizedDescription)
+                print(error!.localizedDescription)
             }else{
                 do{
-                    if let json_data = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? [String: AnyObject]{
-                        //print(json_data)
+                    if let json_data = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? JSONDictionary{
+
                         if let feed = json_data["feed"] as? JSONDictionary,
-                            let entryArray = feed["entry"] as? JSONArray,
-                            let entry = entryArray[0] as? JSONDictionary{
-                                let v = Video(data: entry)
-                                print("Album:\(v.vName)")
-                                print("Rights:\(v.vRights)")
-                                print("Price:\(v.vPrice)")
-                                print("Album image:\(v.vImageUrl)")
-                                print("artist:\(v.vArtist)")
-                                print("Album video:\(v.vVideoUrl)")
-                                print("ImId:\(v.vImid)")
-                                print("Genre:\(v.vGenre)")
-                                print("Link to iTues:\(v.vLinkToiTues)")
-                                print("Relese Date:\(v.vReleaseDate)")
+                            let entryArray = feed["entry"] as? JSONArray{
+                                var videos = [Video]()
+                                for e in entryArray{
+                                    videos.append(Video(data: e as! JSONDictionary))
+                                }
+                                
+                                let count = videos.count
+                                print("APIManager - Total count: \(count)\n")
+
+                                let priority = DISPATCH_QUEUE_PRIORITY_HIGH
+                                dispatch_async(dispatch_get_global_queue(priority, 0)){
+                                    dispatch_async(dispatch_get_main_queue()){
+                                        completion(result: videos)
+                                    }
+                                }
                         }
                         
-                        let priority = DISPATCH_QUEUE_PRIORITY_HIGH
-                        dispatch_async(dispatch_get_global_queue(priority, 0)){
-                            dispatch_async(dispatch_get_main_queue()){
-                                completion(result: "NSJSONSerialization Successful")
-                            }
-                        }
                     }
                 }catch{
-                    dispatch_async(dispatch_get_main_queue()){
-                        completion(result: "Error in JSONSerialization")
-                    }
+                    print("Error in JSONSerialization")
                 }
             }
         }
