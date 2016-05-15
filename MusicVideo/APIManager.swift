@@ -30,11 +30,18 @@ class APIManager{
                         //print(json_data)
                         if let feed = json_data["feed"] as? JSONDictionary,
                             let entryArray = feed["entry"] as? JSONArray,
-                            let entry = entryArray[3] as? JSONDictionary{
+                            let entry = entryArray[0] as? JSONDictionary{
                                 let v = Video(data: entry)
                                 print("Album:\(v.vName)")
+                                print("Rights:\(v.vRights)")
+                                print("Price:\(v.vPrice)")
                                 print("Album image:\(v.vImageUrl)")
-                                print("Album video:\(v.vUrl)")
+                                print("artist:\(v.vArtist)")
+                                print("Album video:\(v.vVideoUrl)")
+                                print("ImId:\(v.vImid)")
+                                print("Genre:\(v.vGenre)")
+                                print("Link to iTues:\(v.vLinkToiTues)")
+                                print("Relese Date:\(v.vReleaseDate)")
                         }
                         
                         let priority = DISPATCH_QUEUE_PRIORITY_HIGH
