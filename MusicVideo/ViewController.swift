@@ -19,6 +19,8 @@ class ViewController: UIViewController {
         let api = APIManager()
         api.loadData("https://itunes.apple.com/us/rss/topmusicvideos/limit=10/json", completion: didLoadData)
         
+        print("status:\(reachabilityStatus)")
+        
     }
     
     func didLoadData(videos: [Video]){
