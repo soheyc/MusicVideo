@@ -8,14 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var videos = [Video]()
 
     @IBOutlet weak var displayLabel: UILabel!
     
+    @IBOutlet weak var tableview: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableview.dataSource = self
+        tableview.delegate = self
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityStatusChanged", name: "ReachStatusChanged", object: nil)
         
@@ -23,11 +28,12 @@ class ViewController: UIViewController {
         
         //Call API
         let api = APIManager()
-        api.loadData("https://itunes.apple.com/us/rss/topmusicvideos/limit=10/json", completion: didLoadData)
-        
+        api.loadData("https://itunes.apple.com/us/rss/topmusicvideos/limit=50/json", completion: didLoadData)
     }
     
     func didLoadData(videos: [Video]){
+        self.videos = videos
+
         for (i, vid) in videos.enumerate(){
             print("Top \(i+1): \(vid.vName)")
         }
@@ -35,6 +41,9 @@ class ViewController: UIViewController {
 //        for i in 0..<videos.count{
 //            print("Top \(i+1) : \(videos[i].vName)")
 //        }
+
+        tableview.reloadData()
+
     }
     
     func reachabilityStatusChanged(){
@@ -53,8 +62,31 @@ class ViewController: UIViewController {
     }
     
     deinit{
-//        NSNotificationCenter.defaultCenter().removeObserver("ReachStatusChanged")
+        //        NSNotificationCenter.defaultCenter().removeObserver("ReachStatusChanged")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "ReachStatusChanged", object: nil)
+    }
+
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+//        print("1 section")
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+//        print("video count:\(videos.count)")
+
+        return videos.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        
+        let cell = tableview.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        
+        cell.textLabel?.text = "\(indexPath.row+1)"
+        cell.detailTextLabel?.text = "\(videos[indexPath.row].vName)"
+
+        return cell
+        
     }
 }
 
