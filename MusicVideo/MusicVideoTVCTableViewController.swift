@@ -19,9 +19,6 @@ class MusicVideoTVCTableViewController: UITableViewController {
         
         reachabilityStatusChanged()
         
-        //Call API
-        let api = APIManager()
-        api.loadData("https://itunes.apple.com/us/rss/topmusicvideos/limit=50/json", completion: didLoadData)
     }
     
     func didLoadData(videos: [Video]){
@@ -41,24 +38,51 @@ class MusicVideoTVCTableViewController: UITableViewController {
     
     func reachabilityStatusChanged(){
         switch(reachabilityStatus){
-        case WIFI:
-//            displayLabel.text = "Wifi available"
-            view.backgroundColor = UIColor.greenColor()
         case NOACCESS:
-//            displayLabel.text = "No access to Internet"
             view.backgroundColor = UIColor.redColor()
-        case WWAN:
-//            displayLabel.text = "Celluar Connection"
-            view.backgroundColor = UIColor.yellowColor()
-        default:return
+            dispatch_async(dispatch_get_main_queue()){
+
+                let myAlert = UIAlertController(title: "No Internet Access", message: "Choose on action", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let okAction = UIAlertAction(title: "Ok", style: .Default, handler: { (ok) -> Void in
+                    print("OK")
+                })
+                
+                let cancelAction = UIAlertAction(title: "cancel", style: .Default, handler: { (cancel) -> Void in
+                    print("Cancel")
+                })
+                
+                let deleteAction = UIAlertAction(title: "delete", style: .Destructive, handler: { (delete) -> Void in
+                    print("Delete")
+                })
+                
+                myAlert.addAction(okAction)
+                myAlert.addAction(cancelAction)
+                myAlert.addAction(deleteAction)
+                
+                self.presentViewController(myAlert, animated: true, completion: nil)
+            }
+            
+        default:
+            view.backgroundColor = UIColor.greenColor()
+            if videos.count>0{
+                print("no need to refresh data.")
+            }else{
+                runAPI()
+            }
         }
     }
+    
+    func runAPI(){
+        let api = APIManager()
+        api.loadData("https://itunes.apple.com/us/rss/topmusicvideos/limit=50/json", completion: didLoadData)
+    }
+
     
     deinit{
         //        NSNotificationCenter.defaultCenter().removeObserver("ReachStatusChanged")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "ReachStatusChanged", object: nil)
     }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -87,7 +111,6 @@ class MusicVideoTVCTableViewController: UITableViewController {
         return cell
     }
     
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

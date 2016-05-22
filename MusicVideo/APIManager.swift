@@ -26,26 +26,24 @@ class APIManager{
                 print(error!.localizedDescription)
             }else{
                 do{
-                    if let json_data = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? JSONDictionary{
+                    if let json_data = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? JSONDictionary,
+                        feed = json_data["feed"] as? JSONDictionary,
+                        entryArray = feed["entry"] as? JSONArray{
+                            
+                            var videos = [Video]()
+                            for e in entryArray{
+                                videos.append(Video(data: e as! JSONDictionary))
+                            }
+                            
+                            let count = videos.count
+                            print("APIManager - Total count: \(count)\n")
 
-                        if let feed = json_data["feed"] as? JSONDictionary,
-                            let entryArray = feed["entry"] as? JSONArray{
-                                var videos = [Video]()
-                                for e in entryArray{
-                                    videos.append(Video(data: e as! JSONDictionary))
+                            let priority = DISPATCH_QUEUE_PRIORITY_HIGH
+                            dispatch_async(dispatch_get_global_queue(priority, 0)){
+                                dispatch_async(dispatch_get_main_queue()){
+                                    completion(result: videos)
                                 }
-                                
-                                let count = videos.count
-                                print("APIManager - Total count: \(count)\n")
-
-                                let priority = DISPATCH_QUEUE_PRIORITY_HIGH
-                                dispatch_async(dispatch_get_global_queue(priority, 0)){
-                                    dispatch_async(dispatch_get_main_queue()){
-                                        completion(result: videos)
-                                    }
-                                }
-                        }
-                        
+                            }
                     }
                 }catch{
                     print("Error in JSONSerialization")
