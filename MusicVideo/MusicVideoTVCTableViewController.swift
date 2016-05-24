@@ -103,11 +103,9 @@ class MusicVideoTVCTableViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MusicVideoTableViewCell
 
-        cell.textLabel?.text = "\(indexPath.row+1)"
-        cell.detailTextLabel?.text = "\(videos[indexPath.row].vName)"
-
+        cell.video = videos[indexPath.row]
         return cell
     }
     
