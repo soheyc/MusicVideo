@@ -20,7 +20,8 @@ class Video{
     private var _vGenre:String
     private var _vLinkToiTunes:String
     private var _vReleaseDate:String
-
+// 
+    var vImageData: NSData?
     
     //getters
     var vName: String{
