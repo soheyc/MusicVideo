@@ -15,10 +15,16 @@ class MusicVideoTVCTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityStatusChanged", name: "ReachStatusChanged", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MusicVideoTVCTableViewController.reachabilityStatusChanged), name: "ReachStatusChanged", object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MusicVideoTVCTableViewController.prefferredFontChange), name: UIContentSizeCategoryDidChangeNotification, object: nil)
         
         reachabilityStatusChanged()
         
+    }
+    
+    func prefferredFontChange(){
+        print("Prefferred Font has changed.")
     }
     
     func didLoadData(videos: [Video]){
@@ -82,6 +88,7 @@ class MusicVideoTVCTableViewController: UITableViewController {
     deinit{
         //        NSNotificationCenter.defaultCenter().removeObserver("ReachStatusChanged")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "ReachStatusChanged", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIContentSizeCategoryDidChangeNotification , object: nil)
     }
 
     override func didReceiveMemoryWarning() {
