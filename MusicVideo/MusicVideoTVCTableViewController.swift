@@ -109,8 +109,13 @@ class MusicVideoTVCTableViewController: UITableViewController {
     }
 
     
+    struct storyboard{
+        static let cellReuseIdentifier = "cell"
+        static let segueIdentifier = "musicDetail"
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MusicVideoTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(storyboard.cellReuseIdentifier, forIndexPath: indexPath) as! MusicVideoTableViewCell
 
         cell.video = videos[indexPath.row]
         return cell
@@ -151,14 +156,17 @@ class MusicVideoTVCTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == storyboard.segueIdentifier{
+            if let index = tableView.indexPathForSelectedRow?.row{
+                let dvc = segue.destinationViewController as! MusicVideoDetailVC
+                let video = videos[index]
+                
+                dvc.video = video
+            }
+        }
+    }
 }
