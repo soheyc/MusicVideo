@@ -92,10 +92,10 @@
             </objects>
             <point key="canvasLocation" x="1763" y="-266"/>
         </scene>
-        <!--Table View Controller-->
+        <!--SettingsTVC-->
         <scene sceneID="ezk-ES-iyu">
             <objects>
-                <tableViewController id="B9f-4H-QoO" sceneMemberID="viewController">
+                <tableViewController id="B9f-4H-QoO" customClass="SettingsTVC" customModule="MusicVideo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="78" sectionHeaderHeight="28" sectionFooterHeight="28" id="pxg-fI-8XS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -257,10 +257,19 @@
                             <outlet property="delegate" destination="B9f-4H-QoO" id="kp8-LV-fEX"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="APICnt" destination="6QO-Mt-ASQ" id="I1a-EK-0Mp"/>
+                        <outlet property="autoDisplay" destination="HcH-gB-m3p" id="9bY-Lx-DLn"/>
+                        <outlet property="bestImageDisplay" destination="ibe-Fd-aez" id="X8Q-Bf-vAF"/>
+                        <outlet property="feedbackDisplay" destination="9tN-ml-lLz" id="tMa-Yy-p8r"/>
+                        <outlet property="securityDisplay" destination="uwN-yG-Jb1" id="TsY-tQ-2G8"/>
+                        <outlet property="sliderCnt" destination="lJJ-FC-Gpg" id="McR-2Q-Xup"/>
+                        <outlet property="toiuchID" destination="nyJ-vs-Xxb" id="WPn-Bo-sWx"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ged-TE-B22" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1752" y="390"/>
+            <point key="canvasLocation" x="1898" y="385"/>
         </scene>
         <!--Music Video DetailVC-->
         <scene sceneID="4QQ-sq-Tt1">
