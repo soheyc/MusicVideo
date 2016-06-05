@@ -116,7 +116,7 @@
                                                         <constraint firstAttribute="width" constant="121" id="i5o-ad-d0Q"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -140,7 +140,7 @@
                                                         <constraint firstAttribute="width" constant="105" id="a3I-ZQ-Xbz"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -160,6 +160,9 @@
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nyJ-vs-Xxb">
                                                     <rect key="frame" x="535" y="26" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="touchID:" destination="B9f-4H-QoO" eventType="valueChanged" id="0Fr-MH-x5B"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Security" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwN-yG-Jb1">
                                                     <rect key="frame" x="8" y="31" width="101" height="21"/>
@@ -167,7 +170,7 @@
                                                         <constraint firstAttribute="width" constant="101" id="LyM-EL-PDd"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -193,7 +196,7 @@
                                                         <constraint firstAttribute="width" constant="255" id="3je-uZ-iG8"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z7B-5H-CQp">
@@ -219,7 +222,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6QO-Mt-ASQ">
                                                     <rect key="frame" x="8" y="8" width="584" height="75"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -264,7 +267,7 @@
                         <outlet property="feedbackDisplay" destination="9tN-ml-lLz" id="tMa-Yy-p8r"/>
                         <outlet property="securityDisplay" destination="uwN-yG-Jb1" id="TsY-tQ-2G8"/>
                         <outlet property="sliderCnt" destination="lJJ-FC-Gpg" id="McR-2Q-Xup"/>
-                        <outlet property="toiuchID" destination="nyJ-vs-Xxb" id="WPn-Bo-sWx"/>
+                        <outlet property="touchID" destination="nyJ-vs-Xxb" id="xlJ-LR-md1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ged-TE-B22" userLabel="First Responder" sceneMemberID="firstResponder"/>

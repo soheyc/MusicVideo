@@ -13,7 +13,7 @@ class SettingsTVC: UITableViewController {
     @IBOutlet weak var autoDisplay: UILabel!
     @IBOutlet weak var feedbackDisplay: UILabel!
     @IBOutlet weak var securityDisplay: UILabel!
-    @IBOutlet weak var toiuchID: UISwitch!
+    @IBOutlet weak var touchID: UISwitch!
     @IBOutlet weak var bestImageDisplay: UILabel!
     @IBOutlet weak var APICnt: UILabel!
     @IBOutlet weak var sliderCnt: UISlider!
@@ -21,10 +21,24 @@ class SettingsTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MusicVideoTVCTableViewController.prefferredFontChange), name: UIContentSizeCategoryDidChangeNotification, object: nil)
-
         tableView.alwaysBounceVertical = false
+        
+        touchID.on = NSUserDefaults.standardUserDefaults().boolForKey("secSetting")
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MusicVideoTVCTableViewController.prefferredFontChange), name: UIContentSizeCategoryDidChangeNotification, object: nil)
     }
+    
+    
+    @IBAction func touchID(sender: UISwitch) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if touchID.on {
+            defaults.setBool(touchID.on, forKey: "secSetting")
+        }else{
+            defaults.setBool(false, forKey: "secSetting")
+        }
+    }
+
+    
     
     func prefferredFontChange(){
         autoDisplay.font = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
