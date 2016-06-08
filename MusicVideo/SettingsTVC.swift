@@ -13,7 +13,7 @@ class SettingsTVC: UITableViewController {
     @IBOutlet weak var autoDisplay: UILabel!
     @IBOutlet weak var feedbackDisplay: UILabel!
     @IBOutlet weak var securityDisplay: UILabel!
-    @IBOutlet weak var touchID: UISwitch!
+    @IBOutlet weak var touchID: UISwitch!	
     @IBOutlet weak var bestImageDisplay: UILabel!
     @IBOutlet weak var APICnt: UILabel!
     @IBOutlet weak var sliderCnt: UISlider!
@@ -26,6 +26,12 @@ class SettingsTVC: UITableViewController {
         touchID.on = NSUserDefaults.standardUserDefaults().boolForKey("secSetting")
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MusicVideoTVCTableViewController.prefferredFontChange), name: UIContentSizeCategoryDidChangeNotification, object: nil)
+        
+        if NSUserDefaults.standardUserDefaults().objectForKey("APICnt") != nil{
+            let count = NSUserDefaults.standardUserDefaults().objectForKey("APICnt") as! Int
+            sliderCnt.value = Float(count)
+            APICnt.text = "\(count)"
+        }
     }
     
     
@@ -39,6 +45,12 @@ class SettingsTVC: UITableViewController {
     }
 
     
+    @IBAction func valueChanged(sender: AnyObject) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(Int(sliderCnt.value), forKey: "APICnt")
+        APICnt.text = "\(Int(sliderCnt.value))"
+    }
+
     
     func prefferredFontChange(){
         autoDisplay.font = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
