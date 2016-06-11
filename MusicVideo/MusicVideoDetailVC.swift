@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class MusicVideoDetailVC: UIViewController {
     var video: Video!
@@ -40,6 +42,17 @@ class MusicVideoDetailVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func playVideo(sender: UIBarButtonItem) {
+        print ("v url: \(video.vVideoUrl)")
+        let url = NSURL(string: video.vVideoUrl)!
+        let player = AVPlayer(URL: url)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        
+        self.presentViewController(playerViewController, animated: true) { 
+            playerViewController.player?.play()
+        }
+    }
 
     /*
     // MARK: - Navigation

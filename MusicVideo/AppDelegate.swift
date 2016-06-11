@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "ReachabilityChanged:", name: kReachabilityChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.ReachabilityChanged(_:)), name: kReachabilityChangedNotification, object: nil)
         
         internetCheck = Reachability.reachabilityForInternetConnection()
         internetCheck?.startNotifier()
