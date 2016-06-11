@@ -87,6 +87,12 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="Dta-dm-92L"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="kVf-mM-joz">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refresh:" destination="3KA-ZW-EeY" eventType="valueChanged" id="R4T-6N-MYN"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="chq-el-dNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
