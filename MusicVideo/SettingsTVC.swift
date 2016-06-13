@@ -63,6 +63,8 @@ class SettingsTVC: UITableViewController {
         APICnt.font = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
     }
     
+    
+    
     deinit{
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIContentSizeCategoryDidChangeNotification , object: nil)
     }
