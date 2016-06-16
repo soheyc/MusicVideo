@@ -9,9 +9,12 @@
 import UIKit
 import AVKit
 import AVFoundation
+import LocalAuthentication
 
 class MusicVideoDetailVC: UIViewController {
     var video: Video!
+    
+    var securitySwitch:Bool = false
     
     @IBOutlet weak var vName: UILabel!
     @IBOutlet weak var videoImage: UIImageView!
@@ -55,7 +58,79 @@ class MusicVideoDetailVC: UIViewController {
     }
 
     @IBAction func socialMedia(sender: UIBarButtonItem) {
-        shareMedia()
+        securitySwitch = NSUserDefaults.standardUserDefaults().boolForKey("secSetting")
+        
+        if securitySwitch{
+            touchIDCheck()
+        }else{
+            shareMedia()
+        }
+    }
+    
+    func touchIDCheck(){
+        //Alert
+        let alert = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        let context = LAContext()
+        var touchIDError: NSError?
+        let reasonString = "TouchID authentication is needed to share info on social media."
+        
+        if context.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: &touchIDError){
+            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString, reply: { (success, policyError) -> Void in
+                if success{
+                    dispatch_async(dispatch_get_main_queue(), {[unowned self] in
+                        self.shareMedia()
+                    })
+                }else{
+                    alert.title = "unsuccessful"
+                    
+                    switch LAError(rawValue: policyError!.code)! {
+                    case .AppCancel:
+                        alert.message = "Authentication was cancelled by app."
+                    case .AuthenticationFailed:
+                        alert.message = "The user failed to provide valid credentials."
+                    case .PasscodeNotSet:
+                        alert.message = "Passcode is not set on this device."
+                    case .SystemCancel:
+                        alert.message = "Authentication was cancelled by the system."
+                    case .TouchIDLockout:
+                        alert.message = "Too many failed attempts."
+                    case .UserCancel:
+                        alert.message = "You cancelled the request."
+                    case .UserFallback:
+                        alert.message = "Password not accepted, must use touchID."
+                    default:
+                        alert.message = "Unable to authenticate."
+                        
+                    }
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), {[unowned self] in
+                    self.presentViewController(alert, animated: true, completion: nil)})
+            })
+            
+        }else{
+            alert.title = "Error"
+            switch LAError(rawValue: touchIDError!.code)! {
+            case .TouchIDNotEnrolled:
+                alert.message = "TouchID is not enrolled."
+                
+            case .TouchIDNotAvailable:
+                alert.message = "TouchID is not available."
+                
+            case .PasscodeNotSet:
+                alert.message = "Passcode is not set."
+            case .InvalidContext:
+                alert.message = "The context is invalid."
+
+            default:
+                alert.message = "Local authentication is not available."
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {[unowned self] in
+                self.presentViewController(alert , animated: true, completion: nil)})
+        }
     }
     
     func shareMedia(){
