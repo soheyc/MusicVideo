@@ -8,7 +8,8 @@
 
 import UIKit
 
-class MusicVideoTVCTableViewController: UITableViewController, UISearchResultsUpdating {
+class MusicVideoTVCTableViewController: UITableViewController {
+//class MusicVideoTVCTableViewController: UITableViewController, UISearchResultsUpdating {
     
     var limit = 10
     
@@ -226,16 +227,23 @@ class MusicVideoTVCTableViewController: UITableViewController, UISearchResultsUp
         }
     }
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        filterSearchArtist(searchController.searchBar.text!.lowercaseString)
-    }
+//    func updateSearchResultsForSearchController(searchController: UISearchController) {
+//        filterSearchArtist(searchController.searchBar.text!.lowercaseString)
+//    }
     
     func filterSearchArtist(searchText: String){
         filterSearch = videos.filter{ video in
-            return video.vArtist.lowercaseString.containsString(searchText.lowercaseString)
+            return video.vArtist.lowercaseString.containsString(searchText.lowercaseString) || video.vName.lowercaseString.containsString(searchText.lowercaseString) || "\(video.vRank)".containsString(searchText)
         }
         
         tableView.reloadData()
     }
     
 }
+
+extension MusicVideoTVCTableViewController: UISearchResultsUpdating{
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterSearchArtist(searchController.searchBar.text!.lowercaseString)
+    }
+}
+
